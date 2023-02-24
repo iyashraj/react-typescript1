@@ -13,10 +13,7 @@ function App() {
   };
   return (
     <div className="App">
-      <h1>Hello Mr Yash</h1>
-      <button onClick={handleIncrese}>Increment</button>
-      <p>{count}</p>
-      <button onClick={handleDecrese}>Decrement</button>
+      
     </div>
   );
 }
