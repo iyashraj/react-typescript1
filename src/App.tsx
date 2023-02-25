@@ -1,24 +1,45 @@
-import { useState } from "react";
-import "./App.css";
+import React, { ChangeEvent, FC, useState } from 'react'
+import "./App.css"
+import { ITask } from './Interfaces'
 
-function App() {
-  const [count, setCount] = useState<number>(0);
-  const handleIncrese = (): void => {
-    setCount(count + 1);
-  };
-  const handleDecrese = (): void => {
-    if (count > 0) {
-      setCount(count - 1);
+const App: FC = () => {
+  const [task, setTask] = useState<string>("")
+  const [deadline, setDeadline] = useState<number>(0)
+  const [todo, setTodos] = useState<ITask[]>([])
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) : void => {
+    if(e.target.name === "task"){
+      setTask(e.target.value)
+    } else if(e.target.name === "deadline"){
+      setDeadline(Number(e.target.value))
     }
-  };
-  return (
-    <div className="App">
-      <h1>Hello Mr Yash</h1>
-      <button onClick={handleIncrese}>Increment</button>
-      <p>{count}</p>
-      <button onClick={handleDecrese}>Decrement</button>
-    </div>
-  );
+  }
+
+const addTask = (): void => {
+  const newTask = {
+    taskName: task,
+    deadline: deadline
+  }
+  setTodos([...todo, newTask])
+  console.log(todo,"todo")
+  setTask("")
+  setDeadline(0)
 }
 
-export default App;
+
+  return (
+    <div className='app'>
+      <div className='header'>
+        <div className="input-container">
+          <input type={"text"} placeholder="Task..." value={task} name="task" onChange={handleChange}/>
+          <input type={"number"} name="deadline" value={deadline} placeholder="Deadline (in Days)..." onChange={handleChange}/>
+        </div>
+        <button onClick={addTask}>Add Task</button>
+      </div>
+      <div className='todolist'></div>
+
+    </div>
+  )
+}
+
+export default App
